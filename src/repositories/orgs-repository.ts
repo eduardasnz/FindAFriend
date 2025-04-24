@@ -17,8 +17,8 @@ export interface CreateOrgData {
 }
 
 export interface FindManyNearbyParams {
-  latitude: number
-  longitude: number
+  latitude: number;
+  longitude: number;
 }
 
 export interface OrgsRepository {

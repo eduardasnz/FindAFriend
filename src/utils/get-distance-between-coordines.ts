@@ -1,34 +1,17 @@
-export interface Coordinate {
-  latitude: number
-  longitude: number
-}
-
 export function getDistanceBetweenCoordinates(
-  from: Coordinate,
-  to: Coordinate,
-) {
-  if (from.latitude === to.latitude && from.longitude === to.longitude) {
-    return 0
-  }
+  from: { latitude: string; longitude: string },
+  to: { latitude: string; longitude: string }
+): number {
+  const R = 6371; // Raio da Terra em km
+  const dLat = (Number(to.latitude) - Number(from.latitude)) * (Math.PI / 180);
+  const dLon = (Number(to.longitude) - Number(from.longitude)) * (Math.PI / 180);
+  const lat1 = Number(from.latitude) * (Math.PI / 180);
+  const lat2 = Number(to.latitude) * (Math.PI / 180);
 
-  const fromRadian = (Math.PI * from.latitude) / 180
-  const toRadian = (Math.PI * to.latitude) / 180
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.sin(dLon / 2) ** 2 * Math.cos(lat1) * Math.cos(lat2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
-  const theta = from.longitude - to.longitude
-  const radTheta = (Math.PI * theta) / 180
-
-  let dist =
-    Math.sin(fromRadian) * Math.sin(toRadian) +
-    Math.cos(fromRadian) * Math.cos(toRadian) * Math.cos(radTheta)
-
-  if (dist > 1) {
-    dist = 1
-  }
-
-  dist = Math.acos(dist)
-  dist = (dist * 180) / Math.PI
-  dist = dist * 60 * 1.1515
-  dist = dist * 1.609344
-
-  return dist
+  return R * c; // Distância em km
 }

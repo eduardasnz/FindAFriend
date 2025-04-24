@@ -1,5 +1,5 @@
 import { Org } from "@prisma/client";
-import { OrgsRepository, CreateOrgData, FindManyNearbyParams } from "../orgs-repository";
+import { OrgsRepository, CreateOrgData, type FindManyNearbyParams,  } from "../orgs-repository";
 import { randomUUID } from "crypto";
 import { getDistanceBetweenCoordinates } from "../../utils/get-distance-between-coordines";
 
@@ -9,12 +9,12 @@ export class InMemoryOrgRepository implements OrgsRepository {
   async findManyNearby({ latitude, longitude }: FindManyNearbyParams): Promise<Org[]> {
     return this.items.filter((org) => {
       const distance = getDistanceBetweenCoordinates(
-        { latitude, longitude },
-        { latitude: Number(org.latitude), longitude: Number(org.longitude) }
-      )
+        { latitude: String(latitude), longitude: String(longitude) },
+        { latitude: String(org.latitude), longitude: String(org.longitude) }
+      );
 
-      return distance < 10 // km
-    })
+      return distance < 10; // km
+    });
   }
 
   async findByEmail(email: string) {

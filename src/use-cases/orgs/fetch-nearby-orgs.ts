@@ -18,12 +18,12 @@ export class FetchNearbyOrgsUseCase {
     userLongitude,
   }: FetchNearbyOrgsUseCaseRequest): Promise<FetchNearbyOrgsUseCaseResponse> {
     const orgs = await this.orgsRepository.findManyNearby({
-      latitude,
-      longitude
+      latitude: Number(userLatitude),
+      longitude: Number(userLongitude)
     })
 
     return {
-      orgs,
+      orgs, 
     }
   }
 }
