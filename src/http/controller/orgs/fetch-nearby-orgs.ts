@@ -1,23 +1,23 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 import { PrismaOrgRepository } from "../../../repositories/prisma/prisma-orgs-repository";
-import { NearbyOrgUseCase } from "../../../use-cases/orgs/fetch-nearby-orgs";
+import { FetchNearbyOrgsUseCase } from "../../../use-cases/orgs/fetch-nearby-orgs"; 
 
 export async function NearbyOrgsController(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
   const querySchema = z.object({
-    city: z.string(),
-    state: z.string(),
+    latitude: z.string(),
+    longitude: z.string(),
   });
 
-  const { city, state } = querySchema.parse(request.query);
+  const { latitude, longitude } = querySchema.parse(request.query);
 
   const orgsRepository = new PrismaOrgRepository();
-  const nearbyOrgsUseCase = new NearbyOrgUseCase(orgsRepository);
+  const nearbyOrgsUseCase = new FetchNearbyOrgsUseCase(orgsRepository);
 
- const { orgs } = await nearbyOrgsUseCase.execute({ city, state })
+ const { orgs } = await nearbyOrgsUseCase.execute({ userLatitude: latitude, userLongitude: longitude })
 
  return reply.status(200).send({ orgs })
 

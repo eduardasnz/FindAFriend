@@ -1,8 +1,8 @@
 import { it, describe, beforeEach, expect } from "vitest";
-import { InMemoryOrgRepository } from "../../repositories/in-memory/in-memory-respoitory";
-import { RegisterOrgsUseCase } from "./register-orgs.use-case";
+import { InMemoryOrgRepository } from "../../repositories/in-memory/in-memory-respository";
+
 import { hash } from "bcryptjs";
-import { AuthenticateOrgUseCase } from "./authenticate-org";
+import { AuthenticateOrgUseCase } from "./authenticate-org.use-case";
 
 describe("Authenticated Use Case test", () => {
   let orgsRepository: InMemoryOrgRepository;

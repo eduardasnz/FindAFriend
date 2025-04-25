@@ -1,17 +1,17 @@
-import { describe, it, expect, beforeEach } from "vitest"
-import { FetchNearbyOrgsUseCase } from "./fetch-nearby-orgs" 
-import { InMemoryOrgRepository } from "../../repositories/in-memory/in-memory-respoitory"
+import { describe, it, expect, beforeEach } from "vitest";
+import { FetchNearbyOrgsUseCase } from "./fetch-nearby-orgs";
+import { InMemoryOrgRepository } from "../../repositories/in-memory/in-memory-respository";
 
-let orgsRepository: InMemoryOrgRepository
-let sut: FetchNearbyOrgsUseCase
+let orgsRepository: InMemoryOrgRepository;
+let sut: FetchNearbyOrgsUseCase;
 
 describe("Fetch Nearby Orgs Use Case", () => {
   beforeEach(() => {
-    orgsRepository = new InMemoryOrgRepository()
-    sut = new FetchNearbyOrgsUseCase(orgsRepository)
-  })
+    orgsRepository = new InMemoryOrgRepository();
+    sut = new FetchNearbyOrgsUseCase(orgsRepository);
+  });
 
-  it('should be able fetch nearby orgs', async () => {
+  it("should be able fetch nearby orgs", async () => {
     await orgsRepository.create({
       name: "ONG Perto",
       author_name: "Duda",
@@ -25,7 +25,7 @@ describe("Fetch Nearby Orgs Use Case", () => {
       street: "Rua A",
       latitude: "-8.047562",
       longitude: "-34.877001",
-    })
+    });
 
     await orgsRepository.create({
       name: "ONG outra Perto",
@@ -40,7 +40,7 @@ describe("Fetch Nearby Orgs Use Case", () => {
       street: "Rua A",
       latitude: "-98.047559",
       longitude: "-49.877000",
-    })
+    });
 
     await orgsRepository.create({
       name: "ONG Longe",
@@ -55,14 +55,14 @@ describe("Fetch Nearby Orgs Use Case", () => {
       street: "Rua B",
       latitude: "-23.550520",
       longitude: "-46.633308",
-    })
+    });
 
     const { orgs } = await sut.execute({
       userLatitude: -8.047562,
       userLongitude: -34.877001,
-    })
-    
-    expect(orgs).toHaveLength(1)
-    expect(orgs[0].name).toEqual("ONG Perto")
-  })
-})
+    });
+
+    expect(orgs).toHaveLength(1);
+    expect(orgs[0].name).toEqual("ONG Perto");
+  });
+});

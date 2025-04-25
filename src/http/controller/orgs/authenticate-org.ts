@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 import { PrismaOrgRepository } from "../../../repositories/prisma/prisma-orgs-repository";
-import { AuthenticateOrgUseCase } from "../../../use-cases/orgs/authenticate-org";
+import { AuthenticateOrgUseCase } from "../../../use-cases/orgs/authenticate-org.use-case";
 import { VerifyJWT } from "../../middleware/verify-jwt";
 
 export async function authenticatedOrgsController(

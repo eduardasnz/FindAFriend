@@ -1,5 +1,5 @@
 import { it, describe, beforeEach, expect } from "vitest";
-import { InMemoryOrgRepository } from "../../repositories/in-memory/in-memory-respoitory";
+import { InMemoryOrgRepository } from "../../repositories/in-memory/in-memory-respository";
 import { RegisterOrgsUseCase } from "./register-orgs.use-case";
 
 describe("Register Use Case test", () => {
@@ -11,7 +11,7 @@ describe("Register Use Case test", () => {
     sut = new RegisterOrgsUseCase(orgsRepository);
   });
 
-  it('should be able to register a new org', async () => {
+  it("should be able to register a new org", async () => {
     const { org } = await sut.execute({
       name: "Centro de Adoações",
       author_name: "Marcio Luis",
@@ -25,14 +25,13 @@ describe("Register Use Case test", () => {
       street: "Rua da Central",
       latitude: "1230221",
       longitude: "4560022",
-    })
+    });
 
-    expect(org.id).toEqual(expect.any(String))
-  })
+    expect(org.id).toEqual(expect.any(String));
+  });
 
-  it('should not to be register with same email', async () => {
-    
-    const email = "duplicado@ong.com"
+  it("should not to be register with same email", async () => {
+    const email = "duplicado@ong.com";
 
     await sut.execute({
       name: "Centro de Adoações",
@@ -47,23 +46,23 @@ describe("Register Use Case test", () => {
       street: "Rua da Central",
       latitude: "1230221",
       longitude: "4560022",
-    })
+    });
 
-    await expect(() => 
-    sut.execute({
-      name: "ONG 2",
-      author_name: "Pedro",
-      email,
-      password: "outrasenha",
-      whatsapp: "888888888",
-      cep: "11111111",
-      city: "Rio",
-      state: "RJ",
-      neighborhood: "Outro Bairro",
-      street: "Rua 2",
-      latitude: "30",
-      longitude: "40",
-    })
+    await expect(() =>
+      sut.execute({
+        name: "ONG 2",
+        author_name: "Pedro",
+        email,
+        password: "outrasenha",
+        whatsapp: "888888888",
+        cep: "11111111",
+        city: "Rio",
+        state: "RJ",
+        neighborhood: "Outro Bairro",
+        street: "Rua 2",
+        latitude: "30",
+        longitude: "40",
+      })
     ).rejects.toThrow();
-  })
+  });
 });

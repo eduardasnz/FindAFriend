@@ -1,5 +1,9 @@
 import { PrismaClient } from "@prisma/client";
-import { OrgsRepository, CreateOrgData } from "../orgs-repository";
+import {
+  OrgsRepository,
+  CreateOrgData,
+  type FindManyNearbyParams,
+} from "../orgs-repository";
 
 const prisma = new PrismaClient();
 
@@ -14,11 +18,14 @@ export class PrismaOrgRepository implements OrgsRepository {
     return org;
   }
 
-  async findManyNearby(city: string, state: string) {
+  async findManyNearby({ latitude, longitude }: FindManyNearbyParams) {
+    const latitudeStr = String(latitude);
+    const longitudeStr = String(longitude);
+
     const orgs = await prisma.org.findMany({
       where: {
-        city,
-        state,
+        latitude: { equals: latitudeStr },
+        longitude: { equals: longitudeStr },
       },
     });
 
